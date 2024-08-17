@@ -1,39 +1,47 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from 'react';
+import React from 'react';
 
-export default function VotingList() {
-  const [polls, setPolls] = useState<Array<{ id: number, title: string, description: string }>>([]);
+interface Poll {
+  id: number;
+  title: string;
+  description: string;
+  status: 'not started' | 'in progress' | 'completed';
+}
 
-  useEffect(() => {
-    // Placeholder data for demonstration. Replace this with an API call to fetch actual voting data.
-    const fetchPolls = async () => {
-      const mockPolls = [
-        { id: 1, title: 'Poll 1', description: 'Description of Poll 1' },
-        { id: 2, title: 'Poll 2', description: 'Description of Poll 2' },
-        { id: 3, title: 'Poll 3', description: 'Description of Poll 3' },
-      ];
-      setPolls(mockPolls);
-    };
+const polls: Poll[] = [
+  { id: 1, title: 'Poll 1', description: 'Description of Poll 1', status: 'in progress' },
+  { id: 2, title: 'Poll 2', description: 'Description of Poll 2', status: 'completed' },
+  { id: 3, title: 'Poll 3', description: 'Description of Poll 3', status: 'not started' },
+];
 
-    fetchPolls();
-  }, []);
-
+export default function VotingListPage() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center">
       <h1 className="text-3xl font-bold mb-8">Voting List</h1>
-      <ul className="w-3/4 max-w-lg bg-white p-6 rounded-lg shadow-md">
-        {polls.length > 0 ? (
-          polls.map(poll => (
-            <li key={poll.id} className="mb-4 border-b pb-4">
-              <h2 className="text-xl font-semibold">{poll.title}</h2>
-              <p className="text-gray-700">{poll.description}</p>
-            </li>
-          ))
-        ) : (
-          <li>No polls available at the moment.</li>
-        )}
-      </ul>
+      <div className="bg-white p-8 rounded-lg shadow-md w-3/4 max-w-lg">
+        {polls.map((poll) => (
+          <div key={poll.id} className="border-b border-gray-200 py-4">
+            <h2 className="text-xl font-semibold">{poll.title}</h2>
+            <p className="text-gray-600">{poll.description}</p>
+            <span
+              className={`text-sm font-medium mt-2 inline-block ${
+                poll.status === 'not started'
+                  ? 'text-gray-500'
+                  : poll.status === 'in progress'
+                  ? 'text-yellow-500'
+                  : 'text-green-500'
+              }`}
+            >
+              {poll.status === 'not started'
+                ? 'Not Started'
+                : poll.status === 'in progress'
+                ? 'In Progress'
+                : 'Completed'}
+            </span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
