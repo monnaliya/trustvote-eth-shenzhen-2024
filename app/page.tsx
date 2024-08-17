@@ -35,7 +35,11 @@ export default function LandingPage() {
   };
 
   const handleLogin = () => {
-    router.push('/voting-list');
+    if (account) {
+      router.push('/voting-list');
+    } else {
+      console.log('Please connect your wallet first.');
+    }
   };
 
   return (
@@ -72,12 +76,6 @@ export default function LandingPage() {
         ) : (
           <div>
             <p className="mb-4">Please log in</p>
-            <button
-              onClick={handleLogin}
-              className="px-6 py-3 bg-green-600 text-white font-semibold rounded-md"
-            >
-              Log In
-            </button>
           </div>
         )}
       </div>
