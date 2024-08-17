@@ -8,7 +8,7 @@ interface Poll {
   title: string;
   description: string;
   status: 'not started' | 'in progress' | 'completed';
-  options: { id: number; text: string }[];
+  options: { id: number; text: string; votes: number }[];
 }
 
 const mockPolls: Poll[] = [
@@ -18,9 +18,9 @@ const mockPolls: Poll[] = [
     description: 'Description of Poll 1',
     status: 'in progress',
     options: [
-      { id: 1, text: 'Option 1' },
-      { id: 2, text: 'Option 2' },
-      { id: 3, text: 'Option 3' },
+      { id: 1, text: 'Option 1', votes: 0 },
+      { id: 2, text: 'Option 2', votes: 0 },
+      { id: 3, text: 'Option 3', votes: 0 },
     ],
   },
   {
@@ -29,9 +29,9 @@ const mockPolls: Poll[] = [
     description: 'Description of Poll 2',
     status: 'completed',
     options: [
-      { id: 1, text: 'Option 1' },
-      { id: 2, text: 'Option 2' },
-      { id: 3, text: 'Option 3' },
+      { id: 1, text: 'Option 1', votes: 5 },
+      { id: 2, text: 'Option 2', votes: 3 },
+      { id: 3, text: 'Option 3', votes: 2 },
     ],
   },
   {
@@ -40,9 +40,9 @@ const mockPolls: Poll[] = [
     description: 'Description of Poll 3',
     status: 'not started',
     options: [
-      { id: 1, text: 'Option 1' },
-      { id: 2, text: 'Option 2' },
-      { id: 3, text: 'Option 3' },
+      { id: 1, text: 'Option 1', votes: 0 },
+      { id: 2, text: 'Option 2', votes: 0 },
+      { id: 3, text: 'Option 3', votes: 0 },
     ],
   },
 ];
@@ -51,19 +51,6 @@ export default function VotingDetailPage({ params }: { params: { id: string } })
   const router = useRouter();
   const pollId = parseInt(params.id, 10);
   const poll = mockPolls.find((p) => p.id === pollId);
-
-  const [selectedOption, setSelectedOption] = useState<number | null>(null);
-  const [hasVoted, setHasVoted] = useState(false);
-
-  const handleVote = async () => {
-    if (selectedOption !== null) {
-      // Simulate sending the vote to the backend or blockchain
-      console.log(`Voted for option ${selectedOption} in poll ${poll?.title}`);
-
-      // Update the UI to reflect that the user has voted
-      setHasVoted(true);
-    }
-  };
 
   if (!poll) {
     return <p>Poll not found</p>;
@@ -77,48 +64,23 @@ export default function VotingDetailPage({ params }: { params: { id: string } })
         <p className="text-md mb-4">
           Status: <span className="font-semibold">{poll.status}</span>
         </p>
-
-        {poll.status === 'in progress' && !hasVoted && (
+        {poll.status === 'completed' ? (
           <div>
-            <div className="mb-4">
+            <h2 className="text-2xl font-bold mb-4">Results</h2>
+            <ul className="text-left mb-6">
               {poll.options.map((option) => (
-                <label key={option.id} className="block text-left">
-                  <input
-                    type="radio"
-                    name="vote"
-                    value={option.id}
-                    checked={selectedOption === option.id}
-                    onChange={() => setSelectedOption(option.id)}
-                    disabled={hasVoted}
-                    className="mr-2"
-                  />
-                  {option.text}
-                </label>
+                <li key={option.id} className="mb-2">
+                  {option.text}: {option.votes} votes
+                </li>
               ))}
-            </div>
-            <button
-              onClick={handleVote}
-              disabled={selectedOption === null || hasVoted}
-              className={`py-2 px-4 rounded-md text-white ${
-                hasVoted ? 'bg-gray-400' : 'bg-blue-600'
-              }`}
-            >
-              {hasVoted ? 'You have voted' : 'Vote'}
-            </button>
+            </ul>
           </div>
+        ) : (
+          <p>This poll has not been completed yet.</p>
         )}
-
-        {poll.status === 'completed' && (
-          <p className="text-md text-gray-500">This poll has been completed. Voting is closed.</p>
-        )}
-
-        {poll.status === 'not started' && (
-          <p className="text-md text-gray-500">This poll has not started yet. Please come back later.</p>
-        )}
-
         <button
+          className="bg-gray-500 text-white font-semibold rounded-md px-4 py-2"
           onClick={() => router.push('/voting-list')}
-          className="mt-6 py-2 px-4 bg-gray-600 text-white rounded-md"
         >
           Back to List
         </button>
