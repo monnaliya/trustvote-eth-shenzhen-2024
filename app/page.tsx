@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState, useEffect } from 'react';
 import { Web3Provider } from '@ethersproject/providers';
@@ -42,28 +42,29 @@ export default function LandingPage() {
     <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center relative">
       <button
         onClick={handleConnect}
-        className="absolute top-5 right-5 px-6 py-3 bg-blue-600 text-white font-semibold rounded-md"
+        className={`absolute top-5 right-5 px-6 py-3 font-semibold rounded-md ${
+          account ? 'bg-green-600' : 'bg-blue-600'
+        } text-white`}
       >
-        Connect MetaMask
+        {account ? 'Connected' : 'Connect MetaMask'}
       </button>
       <div className="bg-white p-8 rounded-lg shadow-md text-center w-3/4 max-w-lg">
         <h1 className="text-3xl font-bold mb-4">TrustVote</h1>
         <p className="text-lg mb-4">
-          TrustVote is a decentralized voting platform where users can participate in secure and transparent voting processes.
-          Connect your wallet to start participating in votes and view existing polls.
+          TrustVote is a decentralized voting platform where users can participate in secure and transparent voting processes. Connect your wallet to start participating in votes and view existing polls.
         </p>
         {account ? (
           <div>
             <p className="mb-4">Connected Account: {account}</p>
             <button
               onClick={handleDisconnect}
-              className="px-6 py-3 bg-red-600 text-white font-semibold rounded-md"
+              className="px-6 py-3 bg-red-600 text-white font-semibold rounded-md mb-4"
             >
               Log Out
             </button>
             <button
               onClick={handleLogin}
-              className="ml-4 px-6 py-3 bg-green-600 text-white font-semibold rounded-md"
+              className="px-6 py-3 bg-green-600 text-white font-semibold rounded-md"
             >
               View Voting List
             </button>
