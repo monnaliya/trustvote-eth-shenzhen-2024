@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
+import Link from "next/link";
 
 interface Poll {
   id: number;
@@ -37,6 +38,9 @@ export default function VotingListPage() {
           </div>
         ))}
       </div>
+      <button className="bg-blue-500 text-white px-4 py-2 rounded font-semibold hover:bg-blue-600">
+            <Link href="/create-voting">Create New Voting</Link>
+        </button>
     </div>
   );
 }
