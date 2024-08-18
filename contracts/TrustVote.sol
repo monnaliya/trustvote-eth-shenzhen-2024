@@ -25,6 +25,7 @@ contract TrustVote {
     // Events
     event PollCreated(uint pollId, string title, string description);
     event VoteCasted(uint pollId, uint optionId, address voter);
+    event PollCompleted(uint pollId);
 
     // Create a new poll
     function createPoll(string memory _title, string memory _description, string[] memory _options, uint _startTime, uint _endTime) public {
@@ -58,7 +59,7 @@ contract TrustVote {
     }
 
     // Complete a poll and view results
-    function completePoll(uint _pollId) public view returns (uint[] memory) {
+    function completePoll(uint _pollId) public returns (uint[] memory) {
         require(polls[_pollId].exists, "Poll does not exist");
         require(block.timestamp > polls[_pollId].endTime, "Poll is still ongoing");
         require(!polls[_pollId].completed, "Poll has already been completed");
@@ -67,6 +68,9 @@ contract TrustVote {
         for (uint i = 0; i < polls[_pollId].options.length; i++) {
             results[i] = polls[_pollId].votes[i];
         }
+
+        polls[_pollId].completed = true;
+        emit PollCompleted(_pollId);
 
         return results;
     }
