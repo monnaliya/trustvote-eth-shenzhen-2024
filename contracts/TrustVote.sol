@@ -42,6 +42,10 @@ contract TrustVote {
         newPoll.endTime = _endTime;
         newPoll.exists = true;
 
+        // for (uint i = 0; i < _options.length; i++) {
+        //     newPoll.options[i] = _options[i];
+        // }
+
         emit PollCreated(pollCount, _title, _description);
     }
 
