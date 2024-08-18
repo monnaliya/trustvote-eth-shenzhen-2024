@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 项目名称：TrustVote
 
-## Getting Started
+### 项目概述：
+TrustVote 是一个基于区块链技术的去中心化投票平台，旨在提供安全、透明且不可篡改的投票过程。该平台允许用户通过其 Web3 钱包创建提案并参与投票。通过智能合约，TrustVote 确保每一票都被永久记录在区块链上，从而促进了决策过程中的信任和问责制。TrustVote 适用于去中心化自治组织（DAO）、社区项目及任何寻求可靠去中心化投票解决方案的组织。
 
-First, run the development server:
+### 需求功能：
+1. **用户身份认证**：
+   - **功能描述**：允许用户使用 Web3 钱包进行身份验证和登录。
+   - **重要性**：确保用户的身份与其钱包地址安全绑定，是去中心化应用的基础。
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2. **创建和管理提案**：
+   - **功能描述**：用户可以通过平台创建新的投票提案，提案包括标题、描述、开始时间和结束时间。
+   - **重要性**：这是平台的核心功能，允许用户发起需要投票的决策问题。
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. **投票机制**：
+   - **功能描述**：用户可以对提案进行投票，每个用户有且仅有一次投票机会，或者根据其持有的代币数量进行投票。
+   - **重要性**：确保投票过程的公平性和透明性。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+4. **显示提案列表**：
+   - **功能描述**：展示当前所有的活动提案，用户可以浏览并选择参与投票。
+   - **重要性**：为用户提供清晰的界面，方便参与投票。
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+5. **投票结果计算与展示**：
+   - **功能描述**：在投票结束后，系统会自动计算并展示投票结果，用户可以查看结果详情。
+   - **重要性**：用户需要透明地了解投票结果，以确保其投票的有效性。
 
-## Learn More
+### 用户界面设计：
+- **登录页面**：包含平台介绍和用户登录入口，支持用户通过 Web3 钱包进行身份验证。
+- **提案列表页面**：展示当前所有可投票的提案，用户可以浏览并选择参与投票。
+- **提案详情页面**：用户点击某一提案后，展示该提案的详细信息和投票选项，并支持用户进行投票。
+- **投票结果页面**：在投票结束后展示投票结果，用户可以查看每个选项的得票情况。
 
-To learn more about Next.js, take a look at the following resources:
+### 技术栈：
+- **前端**：React.js、Ethers.js / Web3.js
+- **后端**：基于以太坊的智能合约开发（Solidity）
+- **部署**：智能合约部署在测试网（如 Rinkeby、Goerli），前端部署在 Vercel 或 Netlify
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 目标用户：
+- 去中心化自治组织（DAO）
+- 社区项目管理者
+- 寻求去中心化投票解决方案的各类组织
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### 未来计划：
+- **移动端支持**：计划未来开发移动端应用，方便用户随时随地参与投票。
+- **多语言支持**：支持多语言界面，方便不同地区用户使用。
